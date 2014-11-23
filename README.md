@@ -1,10 +1,12 @@
-==================================================================
+
 Data Cleanup and analysis of data obtained from the:
 Human Activity Recognition Using Smartphones Dataset Version 1.0
+==================================================================
 
 Completed for Cousera's Getting and Cleaning Data
 by Jeff Leek, PhD, Roger D. Peng, PhD, Brian Caffo, PhD
-==================================================================
+---------------------------------------------------------
+
 
 Summary of data collection from data README:
 ------------------------------------------------
@@ -16,20 +18,16 @@ velocity at a constant rate of 50Hz. The experiments have been video-recorded to
 The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was 
 selected for generating the training data and 30% the test data. 
 
-==========================================================================================================
+
+**In order to execute this script you need to have the dplyr package installed**
 
 
-** In order to execute this script you need to have the dplyr package installed**
+DATA acquisition and loading
+------------------------------
 
+1. The input and output data are loaded into the data folder in your working directory.	If you do you not have one already it will be created.
 
-	DATA acquisition and loading
-	=============================
-
-		The input and output data are loaded into the data folder in your working directory.
-		If you do you not have one already it will be created.
-
-		The script downloads and unzips the data files if you do not have the file in
-		your working directory.
+2. The script downloads and unzips the data files if you do not have the file in your working directory.
 			** If you already have the file downloaded make sure the folder of the original
 			data set is unchanged ("UCI HAR Dataset") and is located in the 'data' folder.**
 
