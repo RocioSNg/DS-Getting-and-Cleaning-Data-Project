@@ -15,13 +15,13 @@ velocity at a constant rate of 50Hz.
 
 2. The first column is named "subject" and contains numbers for each subject (30 in total).  
 
-3. The second column is name "activities" and are named as so in the data set:
-..a. walking
-..b. walking_upstairs
-..c. walking_downstairs
-..d. sitting
-..e. standing
-..f. laying
+3. The second column is name "activity" and are named as so in the data set:
+	a. walking
+	b. walking_upstairs
+	c. walking_downstairs
+	d. sitting
+	e. standing
+	f. laying
  
 
 Description of Data Variables (obtained from README file included with data set)
@@ -59,7 +59,7 @@ fBodyGyroMag
 fBodyGyroJerkMag
 
 The set of variables that were estimated from these signals and kept in the dataset are: 
------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 
 mean: Mean value
 std: Standard deviation
