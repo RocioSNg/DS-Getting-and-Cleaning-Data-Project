@@ -1,26 +1,28 @@
-library(plyr)
 library(dplyr)
 
 
 #-----Create data file it doesnt exist already-----------#
 
   if(!file.exists("data")){  
-    dir.create("data")       
+      dir.create("data")       
   }
 
-
 #---Download data file----#
-  fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-  download.file(fileURL, destfile = "./data/accelerometers.zip")  
 
-#--Record when file is downloaded--#
-  dateDownloaded <- date()
+  if(!file.exists("./data/UCI HAR Dataset")){  
+      print ("data will be downloaded and unzipped into your data folder")
+      fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+      download.file(fileURL, destfile = "./data/accelerometers.zip")  
 
-#---Unzip the file---------#
-  unzip("./data/accelerometers.zip", exdir = "./data", unzip = "internal")
+    #--Record when file is downloaded--#
+      dateDownloaded <- date()
+
+    #---Unzip the file---------#
+      unzip("./data/accelerometers.zip", exdir = "./data", unzip = "internal")
+    }
 
   # designate folders with data files
-    data_folder <- "./UCI HAR Dataset"
+    data_folder <- "./data/UCI HAR Dataset"
     test_folder <- paste(data_folder, "test", sep = "/" )
     train_folder <- paste(data_folder, "train", sep = "/")
 
@@ -28,62 +30,55 @@ library(dplyr)
 
     # Features names
       features <- read.table(paste(data_folder, "features.txt", sep = "/"))
-      head(features)
       feature_names <- as.character(features[,"V2"])
-      for (name in feature_names){
-        if (name[1] == t){
-          feature_names <- sub("\\()","",feature_names)  # get rid of parenthesis
-        }
-      
-
+      feature_names <- sub("\\()","",feature_names)  # get rid of parenthesis
+      feature_names
+   
+    # test set files
+      x_test <- read.table(paste(test_folder, "X_test.txt", sep = "/"),   # contains data
+                           col.names = feature_names)       
+      y_test <- read.table(paste(test_folder, "y_test.txt", sep = "/"),   # activity labels
+                           col.names = "activity")  
+      subject_test <- read.table(paste(test_folder, "subject_test.txt",   # subject labels
+                            sep = "/") ,col.names = "subject")  
  
-    
-    # test set 
-      x_test <- read.table(paste(test_folder, "X_test.txt", sep = "/"), 
-                           col.names = feature_names  )   # contains data
-        head(x_test)
-        dim(x_test)
-      y_test <- read.table(paste(test_folder, "y_test.txt", sep = "/"), col.names = "activity")  # activity labels
-        head(y_test)
-        dim(y_test)
-      subject_test <- read.table(paste(test_folder, "subject_test.txt", sep = "/") ,col.names = "subject")  # subject labels
-        head(subject_test)
-        dim(subject_test)
+    # train set files
+      x_train <- read.table(paste(train_folder, "X_train.txt", sep = "/"), 
+                            col.names = feature_names)
+      y_train <- read.table(paste(train_folder, "y_train.txt", sep = "/"), 
+                            col.names = "activity")
+      subject_train <- read.table(paste(train_folder, "subject_train.txt", 
+                            sep = "/"), col.names = "subject")
 
-    # train set
-      x_train <- read.table(paste(train_folder, "X_train.txt", sep = "/"), col.names = feature_names)
-      dim(x_train)
-      y_train <- read.table(paste(train_folder, "y_train.txt", sep = "/"), col.names = "activity")
-      dim(y_train)
-      subject_train <- read.table(paste(train_folder, "subject_train.txt", sep = "/"), col.names = "subject")
-
-  # merge test data files together
-    test_set <- cbind(subject_test, y_test, x_test)
-
-  # merge training set together
+  #--------Merge Data Sets together----------------#
+    test_set <- cbind(subject_test, y_test, x_test)   
     train_set <- cbind(subject_train, y_train, x_train)
+    master_set <- rbind(test_set, train_set) # final merge of all data
+  
+      # subset dat to only include mean and std values
+          dat_subset <- master_set[ , c(1:2,grep(( "mean|std"),colnames(master_set)))]
 
-  #-----Make final Merge
-    master_set <- rbind(test_set, train_set) 
+    #----Re-code activities to be descriptive-------#
+       
+      activity_label <- read.table(paste(data_folder, "activity_labels.txt",  # Grab acivity labels from data folder
+                                         sep = "/"))
+      activity <- tolower(as.vector(activity_label[,2]))  # convert labels to vector and in lowercase
+      dat_subset$activity <- factor(dat_subset$activity, labels = activity)   # apply labels to factor variables 
+      
   
-    # subset dat to only include mean and std values
-      dat_subset <- master_set[ ,  c( 1:2,grep(( "mean|std"),colnames(master_set))) ]
+      #---Get average of each variable for each activity and each subject
 
-    #----Recode acitvities to be descriptive
+        dat_subset_tbl <- tbl_df(dat_subset) # convert dataframe to data frame tbl useable by dplyr package
+        dat_subset_tbl
   
-      # Grab acivity labels from data folder
-      activity_label <- read.table(paste(data_folder, "activity_labels.txt", sep = "/"))
-      activity <- as.vector(activity_label[,2])
-    
-      dat_subset$activity <- factor(dat_subset$activity, labels = activity)
-      dat_subset$subject <- NULL  # remove subject column since it is not needed
-  
-      # convert dataframe to data frame tbl useable by dplyr package
-      dat_subset_tbl <- tbl_df(dat_subset)
-      dat_subset_tbl
-  
-      dat_by_activity <- group_by(dat_subset_tbl, activity)
+        dat_group <- group_by(dat_subset_tbl, subject,activity)  # groups data by subject and activity
  
-      dat_means <- dat_by_activity %>% summarise_each_(funs(mean), names(dat_by_activity))
-  
+        dat_means <- dat_group %>% summarise_each_(funs(mean), # takes the mean for each column using the grouping factors
+                                        names(dat_group))
+ 
+
+        #-----Write the final tidy data set into the data folder
+          write.table(dat_means, file = "./data/UCI_HAR_activity_means.txt", row.names=FALSE)
+
+
 
