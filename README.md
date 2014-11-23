@@ -1,11 +1,11 @@
 
 Data Cleanup and analysis of data obtained from the: Human Activity Recognition Using Smartphones Dataset Version 1.0
 =======================================================================================================================
-**Completed for Cousera's Getting and Cleaning Data by Jeff Leek, PhD, Roger D. Peng, PhD, Brian Caffo, PhD**
+Completed for Cousera's Getting and Cleaning Data by Jeff Leek, PhD, Roger D. Peng, PhD, Brian Caffo, PhD
+----------------------------------------------------------------------------------------------------------
 
 
-Summary of data collection from data README:
-------------------------------------------------
+**Summary of data collection from data README:**
 The experiments have been carried out with a group of 30 volunteers within an age bracket of 
 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, 
 SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its 
