@@ -16,16 +16,15 @@ velocity at a constant rate of 50Hz.
 2. The first column is named "subject" and contains numbers for each subject (30 in total).  
 
 3. The second column is name "activity" and are named as so in the data set:
-  a. walking
-  b. walking_upstairs
-  c. walking_downstairs
-  d. sitting
-  e. standing
-  f. laying
+		a. walking
+		b. walking_upstairs
+		c. walking_downstairs
+		d. sitting
+		e. standing
+		f. laying
  
 
-Description of Data Variables (obtained from README file included with data set)
----------------------------------------------------------------------------------
+###Description of Data Variables (obtained from README file included with data set)
 
 1. The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. 
 These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order 
@@ -36,32 +35,31 @@ signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth fi
 
 3. Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
 
-These signals were used to estimate variables of the feature vector for each pattern:  
---------------------------------------------------------------------------------------
+###These signals were used to estimate variables of the feature vector for each pattern:  
+
 **'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.**
 
-tBodyAcc-XYZ
-tGravityAcc-XYZ
-tBodyAccJerk-XYZ
-tBodyGyro-XYZ
-tBodyGyroJerk-XYZ
-tBodyAccMag
-tGravityAccMag
-tBodyAccJerkMag
-tBodyGyroMag
-tBodyGyroJerkMag
-fBodyAcc-XYZ
-fBodyAccJerk-XYZ
-fBodyGyro-XYZ
-fBodyAccMag
-fBodyAccJerkMag
-fBodyGyroMag
-fBodyGyroJerkMag
+-tBodyAcc-XYZ
+-tGravityAcc-XYZ
+-tBodyAccJerk-XYZ
+-tBodyGyro-XYZ
+-tBodyGyroJerk-XYZ
+-tBodyAccMag
+-tGravityAccMag
+-tBodyAccJerkMag
+-tBodyGyroMag
+-tBodyGyroJerkMag
+-fBodyAcc-XYZ
+-fBodyAccJerk-XYZ
+-fBodyGyro-XYZ
+-fBodyAccMag
+-fBodyAccJerkMag
+-fBodyGyroMag
+-fBodyGyroJerkMag
 
-The set of variables that were estimated from these signals and kept in the dataset are: 
------------------------------------------------------------------------------------------
+###The set of variables that were estimated from these signals and kept in the dataset are: 
 
-mean: Mean value
-std: Standard deviation
+-**mean: Mean value**
+-**std: Standard deviation**
 
 **The means of each variable(its mean and std deviation) is calculated and reported for each subject(in column 1)  and each activity (in column 2).**
